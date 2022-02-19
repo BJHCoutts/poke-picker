@@ -3,13 +3,8 @@ import { allPokemonRequest } from "../constants/api";
 
 import { get } from "../utils/get";
 
-
-
-
-
-	console.log(get(allPokemonRequest))
+	console.log(Object.keys(get(allPokemonRequest)))
 	
-
 </script>
 
 <style>

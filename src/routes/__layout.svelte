@@ -87,11 +87,34 @@
 		margin-left: 1em;
 	}
 
+	.lines {
+		border-top: 3px solid hsl(300, 55%, 34%);
+		border-bottom: 3px solid hsl(240, 54%, 34%);
+		height: .75em;
+		margin: 0 1.5em;
+	}
+
+	.top-decoration-container {
+		position: relative;
+		top: 1em;
+	}
+
+	.top-decoration-container small {
+		position: absolute;
+		top: 0;
+		background-color: var(--d-grey);
+		padding: 0 .75em;
+		right: 12%;
+	}
+
 </style>
 
 <main>
 	<div class="frame">
-		<small>dot matrix with stereo sound</small>
+		<div class="top-decoration-container">
+			<div class="lines" />
+			<small>dot matrix with stereo sound</small>
+		</div>
 
 		<div class="light-container">
 			<div class="light" />

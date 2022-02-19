@@ -7,7 +7,7 @@ export const get =  async (apiUrl: string) => {
 		if (res.status === 200) {
 			const data = await res.json()
 
-			return data
+			return await data
 		} else {
 			console.error('Status !== 200')
 		}
