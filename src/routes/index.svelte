@@ -1,10 +1,24 @@
+<script lang='ts'>
+import { allPokemonRequest } from "../constants/api";
+
+import { get } from "../utils/get";
+
+
+
+
+
+	console.log(get(allPokemonRequest))
+	
+
+</script>
+
 <style>
 
 	.screen {
-		background-color: var(--bg-colour);
-		inset: 2em 6em;
-		position: fixed;
-		padding: 0em;
+		background-color: var(--screen-colour);
+		margin: 2em 6em;
+		padding: 3em;
+		border-radius: 6px;
 	}
 
 </style>

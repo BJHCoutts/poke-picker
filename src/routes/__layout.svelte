@@ -11,14 +11,13 @@
 		}       
 	</style>
 
-}
-
 </svelte:head>
 
 <style>
 
 	:global(:root) {
-		--bg-colour: hsla(103, 33%, 71%, 0.8);
+		--bg-colour: hsl(0, 0%, 70%);
+		--screen-colour: hsla(103, 33%, 71%, 0.8);
 		--text-colour: hsla(130, 12%, 20%, 0.8);
 		
 		--d-grey: hsl(0, 0%, 41%);
@@ -27,8 +26,19 @@
 	:global(*) {
 		box-sizing: border-box;
 		font-family: sans-serif;
+		padding: 0;
+		margin: 0;
 	}
 
+	:global(body) {
+		background-color: var(--bg-colour);
+	}
+	
+	:global(main) {
+		display: grid;
+		place-items: center;
+	}
+		
 	:global(h1) {
 		color: var(--text-colour);
 		font-family: 'Pokemon Hollow';
@@ -45,35 +55,50 @@
 
 	small {
 		color: whitesmoke;
-		te
+		font-variant: small-caps;
+		letter-spacing: .08em;
 	}
 
 	.frame {
 		background-color: var(--d-grey);
-		position: fixed;
-		inset: 0;
+		max-width: 1000px;
+		position: relative;
+		border-radius: 10px 10px 65px 10px;
 	}
 
 	.light {
 		border-radius: 50%;
-		position: absolute;
 		height: 1em;
 		aspect-ratio: 1 /1 ;
 		background-color: red;
-		top: 30%;
-		left: 2em;
 		box-shadow:
     0 0 30px 8px #fff,
     0 0 30px 9px rgb(255, 0, 13),
     0 0 50px 10px rgb(255, 0, 13);
+	}
+	
+	.light-container {
+		position: absolute;
+		top: 30%;
+		display: grid;
+		place-items: center;
+		grid-gap: 1em 0;
+		width: fit-content;
+		margin-left: 1em;
 	}
 
 </style>
 
 <main>
 	<div class="frame">
-		<div class="light" />
-		<small>battery</small>
+		<small>dot matrix with stereo sound</small>
+
+		<div class="light-container">
+			<div class="light" />
+			<small>battery</small>
+		</div>
+
 		<slot />
+
 	</div>
 </main>
