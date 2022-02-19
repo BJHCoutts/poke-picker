@@ -51,6 +51,7 @@
 		font-family: 'Press Start 2P';
 		text-align: center;
 		font-size: 1rem;
+		margin-bottom: 3em;
 	}
 
 	small {
@@ -79,7 +80,7 @@
 	
 	.light-container {
 		position: absolute;
-		top: 30%;
+		top: 10em;
 		display: grid;
 		place-items: center;
 		grid-gap: 1em 0;
