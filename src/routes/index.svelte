@@ -1,31 +1,39 @@
 <script lang='ts'>
-	
-	import { onMount } from "svelte";
 
-	import { allPokemonRequest } from "../constants/api";
+	import { allPokemonRequest, pokemonQuery } from "../constants/api";
 	import type { Pokemon } from "../types";
 
 	let pokemons: Pokemon[] = []
 	let search = ''
 
-	export const get =  async (apiUrl: string) => {
+	let nextPage
+
+	let loading = true
+
+	const get = async (apiUrl: string) => {
+		loading = true
 
 		try {
 
-			const res = await fetch(apiUrl)
+			let res = await fetch(apiUrl)
 
 			if (res.status === 200) {
 
-				const data = await res.json()
+				let data = await res.json()
+			
+					pokemons = [...data.pokemon]
 
-				if (data.pokemon.length) {
+					if (data.nextPage) {
 
-					pokemons = data.pokemon
+						nextPage = data.nextPage
+					
+					} else { 
+						nextPage = ''
+					}
+
+					loading = false
 
 					return pokemons
-				} else {
-					console.error(`data.pokemons has no length`)
-				}
 
 			} else {
 				console.error('Status !== 200')
@@ -35,13 +43,22 @@
 			console.error(error)
 		}
 	}
-	
-	const allPokemonPromise: Promise<{pokemon: Pokemon[]}> = get(allPokemonRequest)
 
-	$: visiblePokemon = search ?
-	pokemons.filter(pokemon => {
-		return pokemon.name.match(`${search}.*`)
-	}) : pokemons;
+	get(allPokemonRequest)
+
+	const handleChange = () => {
+
+		if (search === '') { return get(allPokemonRequest) }
+
+		if (search.length) { return get(pokemonQuery+search)}
+	}
+
+	const handleNextPage = async (searchTerm) => {
+
+
+
+
+	}
 	
 </script>
 
@@ -49,8 +66,8 @@
 
 	input {
 		margin-bottom: 4em;
-		border: 3px solid var(--text-colour);
 		background-color: var(--screen-colour);
+		border: 3px solid var(--text-colour);
 		border-radius: 3px;
 		padding: .5em .3em;
 	}
@@ -59,36 +76,71 @@
 		outline: none;
 	}
 
-	.screen {
-		background-color: var(--screen-colour);
-		margin: 2em 6em;
-		padding: 3em;
-		border-radius: 6px;
+	.next-page {
+		display: grid;
+		place-items: center;
+	}
+	
+	.pokemon-grid {
+		display: grid;
+		grid-template-columns: repeat( auto-fill, minmax(125px, 1fr) );
+		grid-gap: 1em;
+	}
+	
+	.pokemon-grid-cell {
+		border: 3px solid var(--text-colour);
+		border-radius: 3px;
+		padding: .5em;
+		width: 100%;
+		cursor: pointer;
+		transition: .2s ease-in;
+		color: var(--text-colour);
+	}
+	
+	.pokemon-grid-cell:hover {
+		background-color: var(--text-colour);
+		color: var(--screen-colour);
 	}
 
 </style>
 
-<section class='screen'>
-	<h1>Welcome to Poke-Picker</h1>
-	<h2>Please type a Pokemon name!</h2>
-
+<h2>Please type a Pokemon name!</h2>
 	
-	{#await allPokemonPromise}
-	
-	<p>Loading...</p>
-	
-	{:then} 
+{#if loading}
 
-		<input type="search" bind:value={search} class="ms-auto w-auto" placeholder="Search" />
-		
-		{#each visiblePokemon as pokemon}
+<p>Loading...</p>
 
-			<p>{pokemon.id}</p>
-			<p>{pokemon.name}</p>
-			<p>{pokemon.classfication}</p>
+{:else} 
+
+	<input type="search" bind:value={search} class="ms-auto w-auto" placeholder="Search" on:input={handleChange} />
+
+	<div class="pokemon-grid">
+
+		{#each pokemons as pokemon}
+
+			<a href={`/${pokemon.id}`} class="pokemon-grid-cell">
+
+				<p><strong>Id:</strong> {pokemon.id}</p>
+				<p><strong>Name:</strong> {pokemon.name}</p>
+				<p><strong>Classification:</strong> {pokemon.classfication}</p>
+
+			</a>
+
+		{:else}
+
+			<p>No Pokemon match that search.</p>
 
 		{/each}
 
-	{/await}
+		{#if nextPage}
 
-</section>
+			<div class="pokemon-grid-cell next-page" >
+				<p><strong>Next Page{nextPage}</strong></p>
+			</div>
+			MTE%3D
+
+		{/if}
+
+	</div>	
+
+{/if}

@@ -54,6 +54,10 @@
 		margin-bottom: 3em;
 	}
 
+	:global(p) {
+		margin-bottom: .75em;
+	}
+
 	small {
 		color: whitesmoke;
 		font-variant: small-caps;
@@ -94,6 +98,13 @@
 		height: .75em;
 		margin: 0 1.5em;
 	}
+	
+		.screen {
+			position:fixed;
+			inset:0;
+			background-color: var(--screen-colour);
+			padding: 3em;
+		}
 
 	.top-decoration-container {
 		position: relative;
@@ -107,8 +118,21 @@
 		padding: 0 .75em;
 		right: 12%;
 	}
+	
+	@media screen and (min-width: 600px) {
+
+		.screen {
+			position: initial;
+			background-color: var(--screen-colour);
+			margin: 2em 6em;
+			padding: 3em;
+			border-radius: 6px;
+		}
+
+	}
 
 </style>
+
 
 <main>
 	<div class="frame">
@@ -116,13 +140,18 @@
 			<div class="lines" />
 			<small>dot matrix with stereo sound</small>
 		</div>
-
+		
 		<div class="light-container">
 			<div class="light" />
 			<small>battery</small>
 		</div>
+		
+		<section class='screen'>
+			<h1>Welcome to Poke-Picker</h1>
 
-		<slot />
+			<slot />
+
+		</section>
 
 	</div>
 </main>
