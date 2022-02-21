@@ -25,11 +25,24 @@
 
 					if (data.nextPage) {
 
-						nextPage = data.nextPage
-					
-					} else { 
-						nextPage = ''
-					}
+						const getAdditionalPages = async (nextPage) => {
+	
+							res = await fetch(`${apiUrl}/?page=${nextPage}`)
+	
+							data = await res.json()
+	
+							pokemons = [...pokemons, ...data.pokemon]
+
+							if (data.nextPage) {
+
+								getAdditionalPages(data.nextPage)
+							}
+						}
+
+						getAdditionalPages(data.nextPage)
+
+					} 
+
 
 					loading = false
 
