@@ -60,19 +60,19 @@
 
 	get(allPokemonRequest)
 
-
+	let debounceTimer
 
 	const handleChange = () => {
 
-		window.clearTimeout()
+		clearTimeout(debounceTimer)
 		
-		window.setTimeout( () => {
+		debounceTimer = setTimeout( () => {
 
 			if (search === '') { return get(allPokemonRequest) }
 
 			if (search.length) { return get(pokemonQuery+search)}
 
-		}, 3000)
+		}, 2500)
 
 	}
 	
