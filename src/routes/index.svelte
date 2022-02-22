@@ -1,7 +1,9 @@
 <script lang='ts'>
 
-	import { allPokemonRequest, pokemonQuery } from "../constants/api";
-	import { catchThemAll, endOfList, error, loading, pokemons } from "../stores/pokemonStore";
+	import ReloadOptions from "../components/indexPage/ReloadOptions.svelte";
+import { allPokemonRequest, pokemonQuery } from "../constants/api";
+	import { endOfList, error, loading, pokemons } from "../stores/pokemonStore";
+	import { catchThemAll } from "../utils/catchEmAll";
 
 	let search = ''
 
@@ -15,9 +17,9 @@
 		
 		debounceTimer = setTimeout( () => {
 
-			if (search === '') { return get(allPokemonRequest) }
+			if (search === '') { return catchThemAll(allPokemonRequest) }
 
-			if (search.length) { return get(pokemonQuery+search)}
+			if (search.length) { return catchThemAll(pokemonQuery+search)}
 
 		}, 2000)
 
@@ -38,11 +40,17 @@
 	input:focus {
 		outline: none;
 	}
+
+	li {list-style-type: none;}
 	
 	.pokemon-grid {
 		display: grid;
 		grid-template-columns: repeat( auto-fill, minmax(125px, 1fr) );
 		grid-gap: 1em;
+	}
+
+	.error-container {
+		margin-bottom: 2em;
 	}
 	
 	.pokemon-grid-cell {
@@ -66,6 +74,8 @@
 
 </style>
 
+<ReloadOptions />
+
 <h2>Please type a Pokemon name!</h2>
 	
 {#if $loading}
@@ -74,8 +84,10 @@
 
 {:else if $error}
 
-	<p>{error}</p>
-	<p>Please use a reload button above</p>
+	<div class="error-container">
+		<p>{$error}</p>
+		<p>Please use a reload button above</p>
+	</div>
 
 	{#if $pokemons.length}
 	
@@ -108,17 +120,19 @@
 
 {:else} 
 
-	<input type="search" bind:value={search} class="ms-auto w-auto" placeholder="Search" on:input={handleChange} />
+	<input type="search" bind:value={search} on:input={handleChange} />
 
-	<div class="pokemon-grid">
+	<ul class="pokemon-grid">
 
 		{#each $pokemons as pokemon}
 
 			<a href={`/${pokemon.id}`} class="pokemon-grid-cell basic-container">
 
-				<p><strong>Id:</strong> {pokemon.id}</p>
-				<p><strong>Name:</strong> {pokemon.name}</p>
-				<p><strong>Classification:</strong> {pokemon.classfication}</p>
+				<li>
+					<p><strong>Id:</strong> {pokemon.id}</p>
+					<p><strong>Name:</strong> {pokemon.name}</p>
+					<p><strong>Classification:</strong> {pokemon.classfication}</p>
+				</li>
 
 			</a>
 
@@ -131,7 +145,7 @@
 		{#if $endOfList}
 
 			<div class="pokemon-grid-cell basic-container" >
-				<p><strong>End of List</strong></p>
+				<p><strong>You caught them all. End of list.</strong></p>
 			</div>
 			
 			{:else}
@@ -142,6 +156,6 @@
 
 		{/if}
 
-	</div>	
+		</ul>	
 
 {/if}
