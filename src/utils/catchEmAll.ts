@@ -8,7 +8,7 @@ const getAdditionalPages = async (apiUrl, nextPage) => {
 
 		const res = await fetch(`${apiUrl}/?page=${nextPage}`)
 	
-		if (res.status === 200) {
+		if (res.ok) {
 	
 			const data = await res.json()
 	
@@ -24,8 +24,8 @@ const getAdditionalPages = async (apiUrl, nextPage) => {
 	
 		} else {
 	
-			console.error(`Status !== 200, status: ${res.status}`)
-			error.set(`Status !== 200, status: ${res.status}`)
+			console.error(`Response !== ok, status: ${res.status}`)
+			error.set(`Response !== ok, status: ${res.status}`)
 			loading.set(false)
 	
 		}
@@ -73,8 +73,8 @@ export const catchThemAll = async (apiUrl: string) => {
 		} else {
 
 			loading.set(false)
-			console.error(`Status !== 200, status: ${res.status}`)
-			error.set(`Status !== 200, status: ${res.status}`)
+			console.error(`Response !== ok, status: ${res.status}`)
+			error.set(`Response !== ok, status: ${res.status}`)
 		}
 
 	} catch (error) { 
