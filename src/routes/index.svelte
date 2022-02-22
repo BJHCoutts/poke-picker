@@ -72,7 +72,7 @@
 
 			if (search.length) { return get(pokemonQuery+search)}
 
-		}, 2500)
+		}, 2000)
 
 	}
 	
