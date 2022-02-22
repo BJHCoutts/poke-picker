@@ -1,7 +1,7 @@
 <script lang='ts'>
 
 	import ReloadOptions from "../components/indexPage/ReloadOptions.svelte";
-import { allPokemonRequest, pokemonQuery } from "../constants/api";
+	import { allPokemonRequest, pokemonQuery } from "../constants/api";
 	import { endOfList, error, loading, pokemons } from "../stores/pokemonStore";
 	import { catchThemAll } from "../utils/catchEmAll";
 
@@ -120,7 +120,8 @@ import { allPokemonRequest, pokemonQuery } from "../constants/api";
 
 {:else} 
 
-	<input type="search" bind:value={search} on:input={handleChange} />
+	<!-- svelte-ignore a11y-autofocus -->
+	<input type="search" bind:value={search} on:input={handleChange} autofocus />
 
 	<ul class="pokemon-grid">
 

@@ -3,4 +3,4 @@ export const allPokemonRequest = `${baseApiUrl}/api/pokemon`
 export const pokemonQuery = `${allPokemonRequest}/search/`
 
 export const addChaos = `?chaos=true`
-export const addFlakey = `?flakiness=1`
+export const addFlakiness = `?flakiness=1`

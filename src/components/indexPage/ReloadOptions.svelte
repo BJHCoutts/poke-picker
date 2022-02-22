@@ -1,6 +1,6 @@
 <script lang='ts'>
 	
-	import { addChaos, addFlakey, allPokemonRequest, pokemonQuery } from "../../constants/api";
+	import { addChaos, addFlakiness, allPokemonRequest } from "../../constants/api";
 	import { error } from "../../stores/pokemonStore";
 	import { catchThemAll } from "../../utils/catchEmAll";
 
@@ -13,8 +13,8 @@
 			case 'chaos':
 				catchThemAll(allPokemonRequest+addChaos)
 				break;
-			case 'flakey':
-				catchThemAll(allPokemonRequest+addFlakey)
+			case 'flakiness':
+				catchThemAll(allPokemonRequest+addFlakiness)
 				break;
 			default:
 				catchThemAll(allPokemonRequest)
@@ -54,7 +54,7 @@
 	</li>
 
 	<li>
-		<button on:click={() => handleReload('flakey')}>Reload All w Flakey</button>
+		<button on:click={() => handleReload('flakiness')}>Reload All w Flakiness</button>
 	</li>
 
 </ul>
