@@ -24,16 +24,16 @@ const getAdditionalPages = async (apiUrl, nextPage) => {
 	
 		} else {
 	
-			console.error('Status !== 200')
-			error.set('The server response status !== 200')
+			console.error(`Status !== 200, status: ${res.status}`)
+			error.set(`Status !== 200, status: ${res.status}`)
 			loading.set(false)
 	
 		}
 
 	} catch (error) {
 
-		console.error(error)
-		error.set('caught error')
+		console.error('caught error:', error)
+		error.set('caught error:', error)
 		loading.set(false)
 	}
 
@@ -73,14 +73,14 @@ export const catchThemAll = async (apiUrl: string) => {
 		} else {
 
 			loading.set(false)
-			console.error('Status !== 200')
-			error.set('The server response status !== 200')
+			console.error(`Status !== 200, status: ${res.status}`)
+			error.set(`Status !== 200, status: ${res.status}`)
 		}
 
 	} catch (error) { 
 
-		console.error(error)
-		error.set('caught error')
+		console.error('caught error:', error)
+		error.set('caught error:', error)
 		loading.set(false)
 	}
 }
