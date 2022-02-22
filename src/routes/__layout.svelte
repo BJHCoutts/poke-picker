@@ -137,10 +137,11 @@
 	}
 	
 	.screen {
-		position:fixed;
+		position: fixed;
 		inset:0;
 		background-color: var(--screen-colour);
 		padding: 3em;
+		overflow-y: scroll;
 	}
 
 	.top-decoration-container {
@@ -164,6 +165,7 @@
 			margin: 2em 6em;
 			padding: 3em;
 			border-radius: 6px;
+			overflow-y: auto;
 		}
 
 	}

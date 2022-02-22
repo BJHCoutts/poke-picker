@@ -33,13 +33,15 @@
 	}
 
 	@keyframes move {
-		0% {transform: translateX(-25vw);}
-		100% {transform: translateX(125vw);}
+		0% {transform: translateX(-50vw);}
+		100% {transform: translateX(150vw);}
 	}
 
 	.charizard {
 		position: fixed;
-		left:-10vw;
+		top: 25vh;
+		height: 50vh;
+		left:-50vw;
 		animation: move 6s alternate infinite ease-in-out;
 	}
 
