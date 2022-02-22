@@ -32,6 +32,17 @@
 		margin-bottom: 1em;
 	}
 
+	@keyframes move {
+		0% {transform: translateX(-25vw);}
+		100% {transform: translateX(125vw);}
+	}
+
+	.charizard {
+		position: fixed;
+		left:-10vw;
+		animation: move 6s alternate infinite ease-in-out;
+	}
+
 </style>
 
 <a href="/">{`<=`} Back to main search</a>
@@ -40,11 +51,12 @@
 
 	<p>Loading Pokemon #{id}...</p>
 
-	
-{:then {id, name, classfication, abilities, against_bug, against_dark, against_dragon, against_electric, against_fairy, against_fight, against_fire, against_flying, against_ghost, against_grass, against_ground, against_ice, against_normal, against_poison, against_psychic, against_rock, against_steel, against_water, attack, base_egg_steps, base_happiness,base_total, capture_rate, defense, experience_growth, height_m, hp, japanese_name, percentage_male, pokedex_number, sp_attack, sp_defense, speed, type1, type2, weight_kg, generation, is_legendary}} 
+	{:then {id, name, classfication, abilities, against_bug, against_dark, against_dragon, against_electric, against_fairy, against_fight, against_fire, against_flying, against_ghost, against_grass, against_ground, against_ice, against_normal, against_poison, against_psychic, against_rock, against_steel, against_water, attack, base_egg_steps, base_happiness,base_total, capture_rate, defense, experience_growth, height_m, hp, japanese_name, percentage_male, pokedex_number, sp_attack, sp_defense, speed, type1, type2, weight_kg, generation, is_legendary}} 
 
+	<img src="/images/charizard.png" alt="charizard surprise!" class='charizard'>
+	
 	<h1>#{id}: {name}</h1>
-		
+	
 	<h2>classfication: {classfication}</h2>
 
 	<ul class='basic-container'>
