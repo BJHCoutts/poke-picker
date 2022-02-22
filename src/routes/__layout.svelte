@@ -24,23 +24,41 @@
 
 		--basic-border: 3px solid var(--text-colour);
 	}
-
+	
 	:global(*) {
 		box-sizing: border-box;
 		font-family: sans-serif;
 		padding: 0;
 		margin: 0;
 	}
+	
+	:global(a,a:visited) {
+		color: var(--text-colour)
+	}
+
+	:global(button) {
+		display: block;
+		border: var(--basic-border);
+		border-radius: 3px;
+		padding: .5em;
+		color: var(--text-colour);
+		background-color: var(--screen-colour);
+		cursor: pointer;
+		transition: 
+			color .2s ease-in,
+			background-color .2s ease-in
+		;
+	}
+
+	:global(button:hover) {
+		color: var(--screen-colour);
+		background-color: var(--text-colour);
+	}
 
 	:global(body) {
 		background-color: var(--bg-colour);
-	}
+	}	
 	
-	:global(main) {
-		display: grid;
-		place-items: center;
-	}
-		
 	:global(h1) {
 		color: var(--text-colour);
 		font-family: 'Pokemon Hollow';
@@ -55,19 +73,20 @@
 		font-size: 1rem;
 		margin-bottom: 3em;
 	}
-
+	
 	:global(h3) {
 		margin-bottom: .6em;
 	}
-
-	:global(a,a:visited) {
-		color: var(--text-colour)
+	
+	:global(main) {
+		display: grid;
+		place-items: center;
 	}
 
 	:global(p) {
 		margin-bottom: .75em;
 	}
-
+	
 	small {
 		color: whitesmoke;
 		font-variant: small-caps;
@@ -79,6 +98,7 @@
 		border-radius: 3px;
 		padding: .5em;
 		color: var(--text-colour);
+		background-color: var(--screen-colour);
 	}
 
 	.frame {
@@ -116,12 +136,12 @@
 		margin: 0 1.5em;
 	}
 	
-		.screen {
-			position:fixed;
-			inset:0;
-			background-color: var(--screen-colour);
-			padding: 3em;
-		}
+	.screen {
+		position:fixed;
+		inset:0;
+		background-color: var(--screen-colour);
+		padding: 3em;
+	}
 
 	.top-decoration-container {
 		position: relative;

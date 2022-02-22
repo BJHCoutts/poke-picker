@@ -1,6 +1,6 @@
 <script lang='ts'>
 
-	import { allPokemonRequest, pokemonQuery } from "../constants/api";
+	import { addChaos, addFlakey, allPokemonRequest, pokemonQuery } from "../constants/api";
 	import type { Pokemon } from "../types";
 
 	let pokemons: Pokemon[] = []
@@ -8,6 +8,8 @@
 
 	let loading = true
 	let endOfList = false
+
+	let error
 
 	const get = async (apiUrl: string) => {
 		loading = true
@@ -22,35 +24,53 @@
 			
 					pokemons = [...data.pokemon]
 
-					if (data.nextPage && data.nextPage != 'undefined') {
+					if (data.nextPage && data.nextPage !== 'undefined') {
 
 						const getAdditionalPages = async (nextPage) => {
 	
-							res = await fetch(`${apiUrl}/?page=${nextPage}`)
-	
-							data = await res.json()
-	
-							pokemons = [...pokemons, ...data.pokemon]
+							let additionalPageRes = await fetch(`${apiUrl}/?page=${nextPage}`)
 
-							if (data.nextPage && data.nextPage !== 'undefined') {
+							if (additionalPageRes.status === 200) {
 
-								getAdditionalPages(data.nextPage)
-							} 
-							else { endOfList = true}
+								let additionalPageData = await additionalPageRes.json()
+		
+								pokemons = [...pokemons, ...additionalPageData.pokemon]
+	
+								if (additionalPageData.nextPage && additionalPageData.nextPage !== 'undefined') {
+	
+									getAdditionalPages(additionalPageData.nextPage)
+								} else { 
+									loading = false
+									endOfList = true
+								}
+
+							} else {
+
+								loading = false
+								console.error('Status !== 200')
+								error = 'The server response status !== 200, Please click here to reload'
+
+							}
+	
 						}
 
 						getAdditionalPages(data.nextPage)
 
 					} 
-					else { endOfList = true}
-
+					else { 
+						loading = false
+						endOfList = true
+					}
 
 					loading = false
 
 					return pokemons
 
 			} else {
+
+				loading = false
 				console.error('Status !== 200')
+				error = 'The server response status !== 200, Please click here to reload'
 			}
 
 		} catch (error) { 
@@ -58,7 +78,7 @@
 		}
 	}
 
-	get(allPokemonRequest)
+	get(allPokemonRequest+addFlakey)
 
 	let debounceTimer
 
@@ -75,10 +95,19 @@
 		}, 2000)
 
 	}
+
+	const handleReload = () => {
+		error = false
+		get(allPokemonRequest)
+	}
 	
 </script>
 
 <style>
+
+	button {
+		margin: 0 auto 2em;
+	}
 
 	input {
 		margin-bottom: 4em;
@@ -90,10 +119,6 @@
 
 	input:focus {
 		outline: none;
-	}
-
-	.next-page {
-
 	}
 	
 	.pokemon-grid {
@@ -110,7 +135,10 @@
 
 	a.pokemon-grid-cell {
 		cursor: pointer;
-		transition: .2s ease-in;
+		transition: 
+			color .2s ease-in,
+			background-color .2s ease-in
+		;
 	}
 	
 	a.pokemon-grid-cell:hover {
@@ -124,7 +152,42 @@
 	
 {#if loading}
 
-<p>Loading...</p>
+	<p>Loading...</p>
+
+{:else if error}
+
+	<p>{error}</p>
+
+	<button on:click={handleReload}>Reload</button>
+
+	{#if pokemons.length}
+	
+	<p>This is what was loaded before the server error:</p>
+
+		<div class="pokemon-grid">
+
+			{#each pokemons.sort((a,b) => a.id - b.id) as pokemon}
+
+				<a href={`/${pokemon.id}`} class="pokemon-grid-cell basic-container">
+
+					<p><strong>Id:</strong> {pokemon.id}</p>
+					<p><strong>Name:</strong> {pokemon.name}</p>
+					<p><strong>Classification:</strong> {pokemon.classfication}</p>
+
+				</a>
+
+			{:else}
+
+				<p>No Pokemon match that search. You didn't catch them all.</p>
+
+			{/each}
+
+				<div class="pokemon-grid-cell basic-container" >
+					<p><strong>There was server error before we could load any more...</strong></p>
+				</div>
+
+		</div>
+	{/if}
 
 {:else} 
 
