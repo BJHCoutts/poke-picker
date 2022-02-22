@@ -24,17 +24,24 @@ const getAdditionalPages = async (apiUrl, nextPage) => {
 	
 		} else {
 	
-			console.error(`Response !== ok, status: ${res.status}`)
-			error.set(`Response !== ok, status: ${res.status}`)
-			loading.set(false)
+			throw new Error(`${res.status}`)
 	
 		}
 
-	} catch (error) {
+	} catch (err) {
 
-		console.error('caught error:', error)
-		error.set('caught error:', error)
-		loading.set(false)
+		switch(err.message) {
+
+			case '502':
+				console.error(`Server asleep, please reload`)
+				error.set(`Server asleep, please reload`)
+				loading.set(false)
+				break;
+			default:
+				console.error(`Server response !== ok`)
+				error.set(`Server response !== ok`)
+				loading.set(false)
+		}
 	}
 
 }
@@ -72,15 +79,22 @@ export const catchThemAll = async (apiUrl: string) => {
 
 		} else {
 
-			loading.set(false)
-			console.error(`Response !== ok, status: ${res.status}`)
-			error.set(`Response !== ok, status: ${res.status}`)
+			throw new Error(`${res.status}`)
 		}
 
-	} catch (error) { 
+	} catch (err) { 
 
-		console.error('caught error:', error)
-		error.set('caught error:', error)
-		loading.set(false)
+		switch(err.message) {
+			
+			case '502':
+				console.error(`Server asleep, please reload`)
+				error.set(`Server asleep, please reload`)
+				loading.set(false)
+				break;
+			default:
+				console.error(`Server response !== ok`)
+				error.set(`Server response !== ok`)
+				loading.set(false)
+		}
 	}
 }
