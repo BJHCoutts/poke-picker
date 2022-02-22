@@ -33,13 +33,13 @@ const getAdditionalPages = async (apiUrl, nextPage) => {
 		switch(err.message) {
 
 			case '502':
-				console.error(`Server asleep, please reload`)
-				error.set(`Server asleep, please reload`)
+				console.error(`Server asleep, please reload, status: ${err.message}`)
+				error.set(`Server asleep, please reload, status: ${err.message}`)
 				loading.set(false)
 				break;
 			default:
-				console.error(`Server response !== ok`)
-				error.set(`Server response !== ok`)
+				console.error(`Server response !== ok, status: ${err.message}`)
+				error.set(`Server response !== ok, status: ${err.message}`)
 				loading.set(false)
 		}
 	}
@@ -85,15 +85,15 @@ export const catchThemAll = async (apiUrl: string) => {
 	} catch (err) { 
 
 		switch(err.message) {
-			
+
 			case '502':
-				console.error(`Server asleep, please reload`)
-				error.set(`Server asleep, please reload`)
+				console.error(`Server asleep, please reload, status: ${err.message}`)
+				error.set(`Server asleep, please reload, status: ${err.message}`)
 				loading.set(false)
 				break;
 			default:
-				console.error(`Server response !== ok`)
-				error.set(`Server response !== ok`)
+				console.error(`Server response !== ok, status: ${err.message}`)
+				error.set(`Server response !== ok, status: ${err.message}`)
 				loading.set(false)
 		}
 	}
