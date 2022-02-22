@@ -17,10 +17,12 @@
 
 	:global(:root) {
 		--bg-colour: hsl(0, 0%, 70%);
-		--screen-colour: hsla(103, 33%, 71%, 0.8);
+		--screen-colour: hsl(103, 33%, 71%);
 		--text-colour: hsla(130, 12%, 20%, 0.8);
 		
 		--d-grey: hsl(0, 0%, 41%);
+
+		--basic-border: 3px solid var(--text-colour);
 	}
 
 	:global(*) {
@@ -54,6 +56,14 @@
 		margin-bottom: 3em;
 	}
 
+	:global(h3) {
+		margin-bottom: .6em;
+	}
+
+	:global(a,a:visited) {
+		color: var(--text-colour)
+	}
+
 	:global(p) {
 		margin-bottom: .75em;
 	}
@@ -62,6 +72,13 @@
 		color: whitesmoke;
 		font-variant: small-caps;
 		letter-spacing: .08em;
+	}
+
+	:global(.basic-container) {
+		border: var(--basic-border);
+		border-radius: 3px;
+		padding: .5em;
+		color: var(--text-colour);
 	}
 
 	.frame {
