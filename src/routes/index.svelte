@@ -21,7 +21,7 @@
 
 			if (search.length) { return catchThemAll(pokemonQuery+search)}
 
-		}, 2000)
+		}, 900)
 
 	}
 	
